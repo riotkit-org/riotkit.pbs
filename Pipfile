@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 pytest = "*"
 setuptools-scm = "*"
+twine = "*"
+wheel = "*"
 
 [dev-packages]
 
