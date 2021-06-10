@@ -11,11 +11,6 @@ Ultra simple, allows to have almost empty setup.py file, while keeping all infor
 - README.md and README.rst (in order) are loaded automatically as long description
 - Uses SCM plugin (setuptools_scm) by default
 
-Multiple-package repository
----------------------------
-
-
-
 
 Single-package repository
 -------------------------
@@ -82,3 +77,17 @@ include requirements-external.txt
 include requirements-subpackages.txt
 include setup.json
 ```
+
+Additional work to do in multiple-package repository
+----------------------------------------------------
+
+**requirements-subpackages.txt**
+
+```bash
+rkd.process >= {{ current_version }}, < {{ next_minor_version }}
+```
+
+**Available variables:**
+- current_version: Example 1.3.1.2
+- next_minor_version: Example 1.4
+- next_major_version: Example 2.0
