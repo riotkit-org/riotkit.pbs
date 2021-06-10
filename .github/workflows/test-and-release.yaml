@@ -53,4 +53,4 @@ jobs:
                   python-version: 3.9
 
             - name: Release to PyPI
-              run: "make install build release PYPI_TOKEN=${{ secrets.PYPI_TOKEN }}"
+              run: "make install build release PYPI_TOKEN=${{ secrets.PYPI_GENERIC_TOKEN }}"
