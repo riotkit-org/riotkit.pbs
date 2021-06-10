@@ -12,10 +12,12 @@ Ultra simple, allows to have almost empty setup.py file, while keeping all infor
 - Uses SCM plugin (setuptools_scm) by default
 
 
-Single-package repository
--------------------------
+Getting started
+---------------
 
 **project.toml**
+
+Needs to be configured, so the pip and pipenv would know the dependencies to run setup.py file
 
 ```toml
 [build-system]
@@ -23,6 +25,9 @@ requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.0", "riotkit.pbs
 ```
 
 **setup.py**
+
+The usage of PBS is really simple, import and unpack a dictionary. 
+Optionally override values as you wish - there is no magic, everything is passed explicitly, so you can print it or pass to setup()
 
 ```python
 #!/usr/bin/env python3
@@ -39,6 +44,9 @@ setup(
 ```
 
 **setup.json**
+
+Again, there is no any magic. Every key there is an attribute that should go to setup() from setuptools.
+Please look at setuptools documentation for list of available attributes, you can find it there: https://setuptools.readthedocs.io/en/latest/references/keywords.html
 
 ```json
 {
@@ -64,11 +72,15 @@ setup(
 
 **requirements-external.txt**
 
+It's a regular `requirements.txt` replacement, with all versions there.
+
 ```
 some-package>=1.0
 ```
 
 **MANIFEST.in**
+
+Points out which files should be included in a distribution package.
 
 ```bash
 recursive-exclude tests *
@@ -82,6 +94,9 @@ Additional work to do in multiple-package repository
 ----------------------------------------------------
 
 **requirements-subpackages.txt**
+
+A dynamic version of `requirements.txt`, where a simple templating mechanism is available to allow
+creating dependencies to packages that are released together with current package from same repository.
 
 ```bash
 rkd.process >= {{ current_version }}, < {{ next_minor_version }}
