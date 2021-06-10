@@ -4,6 +4,7 @@ install:
 
 build:
 	./setup.py build
+	./setup.py sdist
 
 test:
 	mkdir -p build
