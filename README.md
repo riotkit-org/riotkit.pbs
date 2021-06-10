@@ -72,3 +72,13 @@ setup(
 ```
 some-package>=1.0
 ```
+
+**MANIFEST.in**
+
+```bash
+recursive-exclude tests *
+recursive-exclude example *
+include requirements-external.txt
+include requirements-subpackages.txt
+include setup.json
+```
