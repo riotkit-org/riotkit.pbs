@@ -4,7 +4,8 @@ from unittest.mock import patch
 
 from riotkit.pbs.setup import _calculate_version, \
     _render_template, \
-    _calculate_requirements
+    _calculate_requirements, \
+    get_setup_attributes
 
 
 class SetupTest(unittest.TestCase, object):
@@ -30,6 +31,14 @@ class SetupTest(unittest.TestCase, object):
             ['somepackage<6,>=5.0', 'rkd.core >= 1.3.1.2, < 1.4'],
             req
         )
+
+    def test_get_setup_attributes_contains_install_requires_name_and_author(self):
+        attributes = get_setup_attributes(root_dir='example', git_root_dir='./')
+
+        self.assertEqual(attributes.get('name'), 'rkd.process')
+        self.assertEqual(attributes.get('author'), 'RiotKit non-profit organization')
+        self.assertIn('rkd.core >= ', str(attributes.get('install_requires')))
+        self.assertIn('somepackage<6,>=5.0', str(attributes.get('install_requires')))
 
 
 @pytest.mark.parametrize("template,variables,expected", [

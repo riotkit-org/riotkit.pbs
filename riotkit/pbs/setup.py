@@ -127,7 +127,7 @@ def get_setup_attributes(root_dir: str = None, git_root_dir: str = None):
 
     # add SCM integration to requirements for setuptools run
     if "setup_requires" not in setup_attributes:
-        setup_attributes['setup_requires'] = {}
+        setup_attributes['setup_requires'] = []
 
     setup_attributes['setup_requires'].append('setuptools_scm')
 
