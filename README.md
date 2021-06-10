@@ -93,6 +93,11 @@ include setup.json
 Additional work to do in multiple-package repository
 ----------------------------------------------------
 
+Multiple-package repositories are used to keep versioning in synchronization for multiple packages.
+Some of packages could be dependent on each other, but possible to install standalone.
+
+**See real use case:** https://github.com/riotkit-org/riotkit-do/tree/master/src/core
+
 **requirements-subpackages.txt**
 
 A dynamic version of `requirements.txt`, where a simple templating mechanism is available to allow
