@@ -1,4 +1,5 @@
 install:
+	command -v pipenv > /dev/null || pip install pipenv
 	pipenv install
 
 build:
