@@ -14,6 +14,7 @@ from typing import List, Tuple
 from setuptools_scm import get_version
 from json import load as json_load
 from .pipenv import collect_locked_dependencies
+from .commands import FreezeCommand, InstallCommand
 
 
 def _local_scheme(version):
@@ -134,5 +135,14 @@ def get_setup_attributes(root_dir: str = None, git_root_dir: str = None, pipenv:
 
     if pipenv:
         setup_attributes += collect_locked_dependencies(root_dir=root_dir)
+
+    # commands
+    FreezeCommand.setup_attributes = setup_attributes
+    InstallCommand.setup_attributes = setup_attributes
+
+    setup_attributes['cmdclass'] = {
+        'freeze_dependencies': FreezeCommand,
+        'install_dependencies': InstallCommand
+    }
 
     return setup_attributes
