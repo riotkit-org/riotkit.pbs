@@ -19,26 +19,50 @@ class SetupTest(unittest.TestCase, object):
         self.assertEqual('1.4', next_minor_version)
         self.assertEqual('2.0', next_major_version)
 
-    def test_calculate_requirements(self):
+    def test_calculate_requirements_loads_requirements_from_external_and_packages(self):
         req = _calculate_requirements(
             current_version='1.3.1.2',
             next_minor_version='1.4',
             next_major_version='2.0',
-            root_dir='example'
+            root_dir='example/working'
         )
 
         self.assertEqual(
-            ['somepackage<6,>=5.0', 'rkd.core >= 1.3.1.2, < 1.4'],
+            ['somepackage >= 5.0, < 6', 'rkd.core >= 1.3.1.2, < 1.4'],
+            req
+        )
+
+    def test_calculate_requirements_from_requirements_txt_are_plain(self):
+        """
+        requirements from requirements.txt should be without filling up a template
+        :return:
+        """
+
+        req = _calculate_requirements(
+            current_version='1.3.1.2',
+            next_minor_version='1.4',
+            next_major_version='2.0',
+            root_dir='example/not-working-bad-requirements-txt'
+        )
+
+        self.assertEqual(
+            [
+                # see example/not-working-bad-requirements-txt/requirements.txt - should not be parsed
+                'flask >= {{ current_version }}, < {{ next_minor_version }}',
+
+                # see example/not-working-bad-requirements-txt/requirements-subpackages.txt - it is parsed
+                'rkd.core >= 1.3.1.2, < 1.4'
+            ],
             req
         )
 
     def test_get_setup_attributes_contains_install_requires_name_and_author(self):
-        attributes = get_setup_attributes(root_dir='example', git_root_dir='./')
+        attributes = get_setup_attributes(root_dir='example/working', git_root_dir='./')
 
         self.assertEqual(attributes.get('name'), 'rkd.process')
         self.assertEqual(attributes.get('author'), 'RiotKit non-profit organization')
         self.assertIn('rkd.core >= ', str(attributes.get('install_requires')))
-        self.assertIn('somepackage<6,>=5.0', str(attributes.get('install_requires')))
+        self.assertIn('somepackage >= 5.0, < 6', str(attributes.get('install_requires')))
 
 
 @pytest.mark.parametrize("template,variables,expected", [

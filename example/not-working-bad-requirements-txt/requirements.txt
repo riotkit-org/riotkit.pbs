@@ -1,0 +1,1 @@
+flask >= {{ current_version }}, < {{ next_minor_version }}

@@ -50,32 +50,32 @@ def _calculate_requirements(current_version: str,
                             root_dir: str) -> List[str]:
     requirements = []
 
-    # external requirements (3rd party libraries)
-    if os.path.isfile(root_dir + '/requirements-external.txt'):
-        with open(root_dir + '/requirements-external.txt') as f:
-            for requirement in parse_requirements(f.read()):
-                requirements.append(str(requirement))
+    filenames = [
+        'requirements.txt',
+        'requirements-external.txt',
+        'requirements-subpackages.txt',
+        'requirements-internal.txt'
+    ]
 
-    # other subpackages from same repository will be added as: >= current_version but < next_minor_version
-    # example:
-    #     current_version = 3.1.5-dev1
-    #     next_minor_version = 3.2
-    #     next_major_version = 4.0
-    #
-    # where both versions are calculated from CURRENT GIT repository
-    if os.path.isfile(root_dir + '/requirements-subpackages.txt'):
-        with open(root_dir + '/requirements-subpackages.txt') as f:
-            for line in f.readlines():
-                if not line.strip():
-                    continue
+    for filename in filenames:
+        if os.path.isfile(root_dir + '/' + filename):
+            with open(root_dir + '/' + filename) as f:
+                for line in f.readlines():
+                    if not line.strip():
+                        continue
 
-                requirements.append(
-                    _render_template(line.strip(), {
-                        'current_version': current_version,
-                        'next_minor_version': next_minor_version,
-                        'next_major_version': next_major_version
-                    })
-                )
+                    # do not allow dynamic requirements.txt
+                    if filename == 'requirements.txt':
+                        requirements.append(line.strip())
+                        continue
+
+                    requirements.append(
+                        _render_template(line.strip(), {
+                            'current_version': current_version,
+                            'next_minor_version': next_minor_version,
+                            'next_major_version': next_major_version
+                        })
+                    )
 
     return requirements
 

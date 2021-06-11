@@ -111,3 +111,25 @@ rkd.process >= {{ current_version }}, < {{ next_minor_version }}
 - current_version: Example 1.3.1.2
 - next_minor_version: Example 1.4
 - next_major_version: Example 2.0
+
+
+Debugging
+---------
+
+PBS is not performing any magic inside, so there is a possibility to just print the attributes that would be used in `setup()`
+
+```python
+#!/usr/bin/env python3
+from setuptools import setup
+from riotkit.pbs import get_setup_attributes
+import pprint
+
+attributes = get_setup_attributes(git_root_dir='../../')
+
+pp = pprint.PrettyPrinter(indent=4)
+pp.pprint(attributes)
+
+# setup(
+#     **attributes
+# )
+```
