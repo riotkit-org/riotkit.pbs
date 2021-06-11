@@ -125,7 +125,7 @@ def get_setup_attributes(root_dir: str = None, git_root_dir: str = None, pipenv:
     setup_attributes['use_scm_version'] = {
         "root": git_root_dir,
         "local_scheme": _local_scheme
-    },
+    }
 
     # add SCM integration to requirements for setuptools run
     if "setup_requires" not in setup_attributes:
