@@ -10,6 +10,7 @@ Ultra simple, allows to have almost empty setup.py file, while keeping all infor
 - All arguments that goes to setup() are placed as dictionary in `setup.json` file, there is no magic there
 - README.md and README.rst (in order) are loaded automatically as long description
 - Uses SCM plugin (setuptools_scm) by default
+- Optional Pipfile.lock from Pipenv support
 
 
 Getting started
@@ -112,11 +113,30 @@ rkd.process >= {{ current_version }}, < {{ next_minor_version }}
 - next_minor_version: Example 1.4
 - next_major_version: Example 2.0
 
+Pipenv support
+--------------
+
+Pipenv support could be optionally enabled. In this case all standard dependencies from `Pipfile.lock` would be frozen
+and added to `install_requires` automatically.
+
+**setup.py**
+
+```python
+#!/usr/bin/env python3
+from setuptools import setup
+from riotkit.pbs import get_setup_attributes
+
+setup(
+    **get_setup_attributes(pipenv=True)
+)
+```
 
 Debugging
 ---------
 
 PBS is not performing any magic inside, so there is a possibility to just print the attributes that would be used in `setup()`
+
+**setup.py**
 
 ```python
 #!/usr/bin/env python3

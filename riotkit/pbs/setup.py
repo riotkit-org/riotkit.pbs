@@ -11,9 +11,9 @@
 import os
 import re
 from typing import List, Tuple
-from pkg_resources import parse_requirements
 from setuptools_scm import get_version
 from json import load as json_load
+from .pipenv import collect_locked_dependencies
 
 
 def _local_scheme(version):
@@ -80,12 +80,13 @@ def _calculate_requirements(current_version: str,
     return requirements
 
 
-def get_setup_attributes(root_dir: str = None, git_root_dir: str = None):
+def get_setup_attributes(root_dir: str = None, git_root_dir: str = None, pipenv: bool = False):
     """
     Prepare attributes for setup() call
 
     :param root_dir:
     :param git_root_dir:
+    :param pipenv: True to enable Pipfile.lock parsing
     :return:
     """
 
@@ -130,5 +131,8 @@ def get_setup_attributes(root_dir: str = None, git_root_dir: str = None):
         setup_attributes['setup_requires'] = []
 
     setup_attributes['setup_requires'].append('setuptools_scm')
+
+    if pipenv:
+        setup_attributes += collect_locked_dependencies(root_dir=root_dir)
 
     return setup_attributes
