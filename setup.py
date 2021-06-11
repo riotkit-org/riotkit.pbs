@@ -9,7 +9,7 @@ with open('README.md', 'r') as readme:
                     'designed mainly for publishing multiple packages from single repository',
         long_description=readme.read(),
         license='Apache-2',
-        home_page='https://github.com/riotkit-org',
+        url='https://github.com/riotkit-org',
         author_email='riotkit@riseup.net',
         long_description_content_type='text/markdown',
         keywords=['riotkit', 'pbs', 'pbr', 'build', 'simplified', 'reasonable',

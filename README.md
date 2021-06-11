@@ -57,7 +57,7 @@ Please look at setuptools documentation for list of available attributes, you ca
     "author": "RiotKit non-profit organization",
     "author_email": "riotkit@riseup.net",
     "description": "rkd.process provides easy process interaction and output capturing/redirecting, wraps subprocess from Python's standard library.",
-    "home_page": "https://github.com/riotkit-org",
+    "url": "https://github.com/riotkit-org",
     "license": "Apache-2",
     "classifiers": [
         "Development Status :: 5 - Production/Stable",
