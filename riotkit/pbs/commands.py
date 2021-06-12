@@ -16,7 +16,7 @@ class FreezeCommand(distutils.cmd.Command):
         pass
 
     def run(self):
-        for dependency in self.setup_attributes.get('setup_requires'):
+        for dependency in self.setup_attributes.get('install_requires'):
             print(dependency)
 
 
@@ -33,6 +33,6 @@ class InstallCommand(distutils.cmd.Command):
 
     def run(self):
         try:
-            subprocess.check_call(['pip', 'install'] + self.setup_attributes.get('setup_requires'))
+            subprocess.check_call(['pip', 'install'] + self.setup_attributes.get('install_requires'))
         except subprocess.CalledProcessError as err:
             sys.exit(err.returncode)
