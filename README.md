@@ -4,6 +4,9 @@ Python Build Simplified
 Lighter alternative to PBR. Created to support easily multiple namespace packages built from single repository.
 Ultra simple, allows to have almost empty setup.py file, while keeping all information in setup.json
 
+**Optionally integrates with Pipfile.lock which means you can stop using requirements.txt and use fully reproducible builds on production without doing pip freeze manually**
+
+
 **Features:**
 - External dependencies in `requirements-external.txt`
 - Internal dependencies (packages from same repository) in `requirements-subpackages.txt`
