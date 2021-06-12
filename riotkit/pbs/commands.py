@@ -7,6 +7,7 @@ import distutils.log
 class FreezeCommand(distutils.cmd.Command):
     description = 'Generate static requirements.txt'
     setup_attributes: dict = {}
+    user_options = []
 
     def initialize_options(self):
         pass
@@ -22,6 +23,7 @@ class FreezeCommand(distutils.cmd.Command):
 class InstallCommand(distutils.cmd.Command):
     description = 'Install requirements using pip'
     setup_attributes: dict = {}
+    user_options = []
 
     def initialize_options(self):
         pass
