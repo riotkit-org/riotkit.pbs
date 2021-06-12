@@ -24,10 +24,19 @@ def _local_scheme(version):
 def _calculate_version(root_dir: str) -> Tuple[str, str, str]:
     current_version = get_version(root=root_dir)
     parts = current_version.split('.')
-    next_minor_version = '.'.join([parts[0], str(int(parts[1]) + 1)])
-    next_major_version = '.'.join([str(int(parts[0]) + 1), '0'])
+    next_minor_version = '.'.join([parts[0], _bump_version_number(parts[1])])
+    next_major_version = '.'.join([_bump_version_number(parts[0]), '0'])
 
     return current_version, next_minor_version, next_major_version
+
+
+def _bump_version_number(version_part: str) -> str:
+    matches = re.match(re.compile('^([0-9]+)(.*)$'), version_part)
+
+    if not matches:
+        return '1'
+
+    return str(int(matches[1]) + 1) + matches[2]
 
 
 def _render_template(template: str, variables: dict) -> str:

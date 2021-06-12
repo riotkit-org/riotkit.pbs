@@ -5,7 +5,8 @@ from unittest.mock import patch
 from riotkit.pbs.setup import _calculate_version, \
     _render_template, \
     _calculate_requirements, \
-    get_setup_attributes
+    get_setup_attributes, \
+    _bump_version_number
 
 
 class SetupTest(unittest.TestCase, object):
@@ -79,6 +80,33 @@ class SetupTest(unittest.TestCase, object):
         'rkd.core >= 1.3.1.2, < 1.4'
     )
 ])
-def test_render_template(template: str, variables: dict, expected: str):
+def test_render_template(template: str, variables: dict, expected: str) -> None:
     assert expected == _render_template(template, variables)
 
+
+@pytest.mark.parametrize("version,expected", [
+    (
+        '1',  # version
+        '2'   # expected after bump
+    ),
+    (
+        '1-rc2',  # version
+        '2-rc2'   # expected after bump
+    ),
+    (
+        '1.rc1',  # version
+        '2.rc1'   # expected after bump
+    )
+])
+def test_bump_version_number(version: str, expected: str) -> None:
+    """
+    Bumps part of a version number
+    The metadata part after non-numeric character (ex. -, .) cannot be incremented, as it is totally custom value
+    that we do not understand purpose of
+
+    :param version:
+    :param expected:
+    :return:
+    """
+
+    assert expected == _bump_version_number(version)
