@@ -11,7 +11,7 @@ Ultra simple, allows to have almost empty setup.py file, while keeping all infor
 - README.md and README.rst (in order) are loaded automatically as long description
 - Uses SCM plugin (setuptools_scm) by default
 - Optional Pipfile.lock from Pipenv support
-- Command `./setup.py freeze_dependencies` to print dependencies in requirements.txt format
+- Command `./setup.py --quiet freeze_dependencies` to print dependencies in requirements.txt format
 - Command `./setup.py install_dependencies` to install dependencies using pip
 
 
